@@ -27,6 +27,10 @@ app.use(express.json())
 app.use('/api/auth', authRoutes)
 app.use('/api/events', eventsRoutes)
 
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html')
+})
+
 // Puerto - Escuchar peticiones
 const PORT = process.env.PORT || 3000
 
