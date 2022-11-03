@@ -1,12 +1,15 @@
 import cors from 'cors';
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import express from 'express';
+
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import { connectionDB } from './database/config.js';
 import authRoutes from './routes/auth.js';
 import eventsRoutes from './routes/events.js';
 
-dotenv.config()
+// dotenv.config()
 
 // Crear el servidor express
 const app = express()
@@ -27,9 +30,14 @@ app.use(express.json())
 app.use('/api/auth', authRoutes)
 app.use('/api/events', eventsRoutes)
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.get('*', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html')
+  res.sendFile(`${__dirname}/public/index.html`)
 })
+
+// console.log(path.join(__dirname, '/dist', 'index.html'));
 
 // Puerto - Escuchar peticiones
 const PORT = process.env.PORT || 3000
